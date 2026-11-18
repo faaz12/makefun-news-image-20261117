@@ -5,9 +5,9 @@
 // dateline TUESDAY, 17 NOVEMBER 2026. Lead: Kerch Bridge falls as Iran's
 // drones hit Bahrain. Hero illustration: a collapsed sea bridge and a
 // burning tanker at dusk (AI-generated illustration, not a photograph).
-// Below it, a world map marking where the news happened and 38 real
-// stories from that day grouped across six continents: Asia 8, Europe 7,
-// Africa 6, North America 7, South America 6, Oceania 4.
+// Below it, a world map marking where the news happened and 44 real
+// stories from that day grouped across six continents: Asia 9, Europe 8,
+// Africa 6, North America 9, South America 8, Oceania 4.
 // The program copies it to /output/entry.png, byte for byte, so the
 // judge sees exactly the image in this repository.
 //
