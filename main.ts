@@ -15,6 +15,7 @@
 // /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
+import { createHash } from 'node:crypto';
 import { copyFileSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -33,6 +34,15 @@ if (written !== expected) {
   throw new Error(`entry.png copy incomplete: wrote ${written} of ${expected} bytes`);
 }
 
+// A size match alone does not prove the copy is whole, so hash both
+// files with SHA-256 and compare: a single flipped byte fails loudly
+// instead of shipping a corrupted image to the judge.
+const srcHash = createHash('sha256').update(readFileSync(src)).digest('hex');
+const destHash = createHash('sha256').update(readFileSync(dest)).digest('hex');
+if (srcHash !== destHash) {
+  throw new Error(`entry.png copy corrupted: sha256 ${destHash} != ${srcHash}`);
+}
+
 // The gate takes a whole PNG of at most 1 MiB and 1024 by 1024 pixels:
 // check the copy is a whole PNG (magic bytes) and inside the size cap
 // before handing it to the judge.
@@ -46,12 +56,12 @@ if (written > 1048576) {
 }
 
 // A whole PNG also has its size in the IHDR chunk right after the
-// magic bytes: the gate caps the picture at 1024 by 1024 pixels, so
-// read the width and height here and refuse an oversize image instead
-// of shipping it to the judge.
+// magic bytes: the front page is designed at exactly 1024 by 1024
+// pixels, so read the width and height here and refuse anything else
+// instead of shipping a degraded entry to the judge.
 const ihdr = readFileSync(dest).subarray(16, 24);
 const width = ihdr.readUInt32BE(0);
 const height = ihdr.readUInt32BE(4);
-if (width > 1024 || height > 1024) {
-  throw new Error(`entry.png over the 1024x1024 gate: ${width}x${height}`);
+if (width !== 1024 || height !== 1024) {
+  throw new Error(`entry.png must be exactly 1024x1024: got ${width}x${height}`);
 }
