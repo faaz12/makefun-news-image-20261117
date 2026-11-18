@@ -40,8 +40,8 @@ school protests swell; two trains collide near Prague.
 control; Somalia accuses UAE over Sudan; 17 killed in South Africa
 shootings; South Africa edge Kenya 2-1; Mozambique's Mondlane on trial.
 
-**NORTH AMERICA — 9:** US loses measles elimination status; NSA system goes
-down; Apple iCloud and Pay go down; Chase and Zelle go down; Nvidia board
+**NORTH AMERICA — 9:** US loses measles elimination status; Chase and Zelle
+go down; NSA system goes down; Apple iCloud and Pay go down; Nvidia board
 bars Huang's return; US tightens AI chip export rules; California sues
 OpenAI; Buffett gives away $5.47bn; Haiti boy freed from ICE custody.
 
