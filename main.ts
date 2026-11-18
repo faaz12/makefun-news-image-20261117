@@ -46,3 +46,14 @@ if (!head.equals(PNG_MAGIC)) {
 if (written > 1048576) {
   throw new Error(`entry.png over the 1 MiB gate: ${written} bytes`);
 }
+
+// A whole PNG also has its size in the IHDR chunk right after the
+// magic bytes: the gate caps the picture at 1024 by 1024 pixels, so
+// read the width and height here and refuse an oversize image instead
+// of shipping it to the judge.
+const ihdr = readFileSync(dest).subarray(16, 24);
+const width = ihdr.readUInt32BE(0);
+const height = ihdr.readUInt32BE(4);
+if (width > 1024 || height > 1024) {
+  throw new Error(`entry.png over the 1024x1024 gate: ${width}x${height}`);
+}
